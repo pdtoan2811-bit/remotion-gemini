@@ -1,0 +1,16 @@
+node_modules/
+dist/
+out/
+.env
+*.mp4
+*.mp3
+*.wav
+*.webm
+public/voiceover/
+public/images/
+public/content/*/
+.prompts/*.done
+.prompts/*.json
+.prompts/*.md
+.prompts/*.status.json
+!.prompts/.gitkeep
