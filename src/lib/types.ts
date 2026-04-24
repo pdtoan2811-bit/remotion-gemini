@@ -14,6 +14,7 @@ export interface PromptJob {
   prompt: string;
   template: TemplateType;
   options: PromptOptions;
+  projectId: string;
   status: JobStatus;
   progress: number; // 0-100
   statusMessage: string;
@@ -22,6 +23,8 @@ export interface PromptJob {
   createdAt: string;
   updatedAt: string;
   error: string | null;
+  parentJobId: string | null;
+  refinedSceneId: string | null;
 }
 
 /** Available video templates */
@@ -38,7 +41,22 @@ export interface PromptOptions {
   width?: number;
   height?: number;
   sceneCount?: number;
+  maxSceneDuration?: number;
+  targetDuration?: number;
   style?: "kinetic" | "formal" | "minimal";
+  projectId?: string;
+  refineScene?: string;
+  parentJobId?: string;
+}
+
+/** User-managed project that groups related videos and refinements */
+export interface VideoProject {
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+  videoCount: number;
 }
 
 /** A single scene in the video timeline */
@@ -77,5 +95,23 @@ export interface PromptFile {
   prompt: string;
   template: TemplateType;
   options: PromptOptions;
+  projectId?: string;
   createdAt: string;
+}
+
+/** Backend readiness state for Antigravity prompting */
+export interface ReadinessStatus {
+  canPrompt: boolean;
+  summary: string;
+  checks: {
+    serverOnline: boolean;
+    mcpBridgeOnline: boolean;
+    antigravityAttached: boolean;
+  };
+  heartbeat: {
+    heartbeatAt: string | null;
+    heartbeatAgeSec: number | null;
+    requestCount: number;
+    lastRequestAt: string | null;
+  };
 }
